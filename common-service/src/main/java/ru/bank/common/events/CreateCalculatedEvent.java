@@ -6,5 +6,5 @@ import lombok.Data;
 public class CreateCalculatedEvent {
 
     private final String applicationId;
-    private final Long calculatedLoan;
+    private final Long loanAmountApproved;
 }

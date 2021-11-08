@@ -45,7 +45,6 @@ public class ValidationServiceImpl implements ValidationService {
             .block();
     }
 
-
     private Mono<SalaryCheckResult> salaryCheck(SalaryCheck salaryCheck) {
         try {
             return webClient.post()

@@ -50,6 +50,6 @@ public class ApplicationProjectionEventHandler {
         final ApplicationEntity entity = repositoryHandler.getApplicationEntity(
             event.getApplicationId());
         entity.setStatus(Status.ACCEPTED);
-        entity.setLoanAmountApproved(event.getCalculatedLoan());
+        entity.setLoanAmountApproved(event.getLoanAmountApproved());
     }
 }

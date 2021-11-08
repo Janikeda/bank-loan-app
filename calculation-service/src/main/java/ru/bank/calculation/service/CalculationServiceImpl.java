@@ -12,6 +12,6 @@ public class CalculationServiceImpl implements CalculationService {
     @Override
     public CalculationResult calculateLoan(CreateCalculationEvent event) {
         return new CalculationResult(event.getApplicationId(),
-            (long) (event.getLoanAmount() * (65.0f / 100.0f)));
+            (long) (event.getLoanAmountRequested() * (65.0f / 100.0f)));
     }
 }

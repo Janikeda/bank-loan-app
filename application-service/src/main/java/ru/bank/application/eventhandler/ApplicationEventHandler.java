@@ -39,7 +39,7 @@ public class ApplicationEventHandler {
             event.getApplicationId());
         String message = String.format(
             "Добрый день, %s %s!\nВаш кредит одобрен. Сумма согласованного кредита: %s",
-            entity.getName(), entity.getLastName(), event.getCalculatedLoan());
+            entity.getName(), entity.getLastName(), event.getLoanAmountApproved());
         emailService.sendSimpleMessage(entity.getEmail(), MAIL_SUBJECT, message);
     }
 }
