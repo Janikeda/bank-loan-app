@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  application-db:
+    image: postgres:12
+    environment:
+      - POSTGRES_DB=application
+      - POSTGRES_USER=usr
+      - POSTGRES_PASSWORD=pwd
+    ports:
+      - "5430:5432"
+    volumes:
+      - ../init:/docker-entrypoint-initdb.d
+  validation-db:
+    image: postgres:12
+    environment:
+      - POSTGRES_DB=validation
+      - POSTGRES_USER=usr
+      - POSTGRES_PASSWORD=pwd
+    ports:
+      - "5431:5432"
+    volumes:
+      - ../init:/docker-entrypoint-initdb.d
+
+#  elk:
+#    image: sebp/elk
+#    ports:
+#      - "5601:5601" #kibana
+#      - "9200:9200" #elastic
+#      - "5044:5044" #logstash
