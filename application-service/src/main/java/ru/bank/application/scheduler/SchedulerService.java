@@ -13,7 +13,8 @@ import ru.bank.application.projection.repository.ApplicationRepositoryHandler;
 @RequiredArgsConstructor
 public class SchedulerService {
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+        "dd.MM.yyyy HH:mm:ss");
 
     private final ApplicationRepositoryHandler repositoryHandler;
 
@@ -21,7 +22,7 @@ public class SchedulerService {
     public void deleteOldRecords() {
         var dateTime = LocalDateTime.now();
         final int result = repositoryHandler.removeOldRecords(dateTime.minusHours(24L));
-        log.info(String.format("SchedulerService. Date: %s. Number of deleted records: %s",
-            dateTime.format(formatter), result));
+        log.info("SchedulerService. Date: {}. Number of deleted records: {}",
+            dateTime.format(formatter), result);
     }
 }

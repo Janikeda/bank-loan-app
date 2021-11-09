@@ -15,8 +15,8 @@ public class SwaggerConfig {
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(new ApiInfoBuilder()
-                        .description("application-service")
-                        .title("application-service")
+                        .description("Application-service")
+                        .title("Application-service")
                         .build())
                 .enable(true)
                 .select()

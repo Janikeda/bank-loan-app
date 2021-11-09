@@ -14,8 +14,7 @@ public class AppConfig {
     public XStream xStream() {
         var xStream = new XStream();
         xStream.allowTypesByWildcard(
-            new String[]{"ru.bank.common.events.**", "ru.bank.common.commands.**",
-                "ru.bank.application.queries.**"});
+            new String[]{"ru.bank.common.events.**", "ru.bank.common.commands.**"});
 
         return xStream;
     }
