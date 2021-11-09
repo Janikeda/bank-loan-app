@@ -14,6 +14,7 @@ import ru.bank.validation.dto.SalaryCheck;
 import ru.bank.validation.dto.SalaryCheckResult;
 import ru.bank.validation.exception.model.GatewayException;
 import ru.bank.validation.exception.model.SalaryCheckDuplicatedException;
+import ru.bank.validation.exception.model.ServiceException;
 import ru.bank.validation.model.ValidationResult;
 import ru.bank.validation.repository.blackList.BlackListedPerson;
 import ru.bank.validation.repository.blackList.BlackListedPersonRepository;
@@ -32,7 +33,7 @@ public class ValidationServiceImpl implements ValidationService {
     private String salaryCheckUrl;
 
     @Override
-    public ValidationResult validate(CreateValidationEvent event) {
+    public Mono<ValidationResult> validate(CreateValidationEvent event) {
         Mono<SalaryCheckResult> salaryCheckResult = salaryCheck(
             new SalaryCheck(event.getApplicationId(), event.getInn(), event.getLoanAmount()));
 
@@ -41,8 +42,7 @@ public class ValidationServiceImpl implements ValidationService {
             .switchIfEmpty(Mono.just(new BlackListedPerson()));
 
         return Mono.zip(salaryCheckResult, blackListedPerson)
-            .flatMap(resolutionMaker::makeResolution)
-            .block();
+            .flatMap(resolutionMaker::makeResolution);
     }
 
     private Mono<SalaryCheckResult> salaryCheck(SalaryCheck salaryCheck) {
@@ -57,7 +57,9 @@ public class ValidationServiceImpl implements ValidationService {
                 .onErrorMap(errorMapper);
         } catch (GatewayException exception) {
             var httpStatus = exception.getHttpStatus();
-            if (httpStatus.isPresent() && httpStatus.get() == HttpStatus.CONFLICT) {
+            if (httpStatus.orElseThrow(
+                () -> new ServiceException("HttpStatus from salary-check-service is null"))
+                == HttpStatus.CONFLICT) {
                 throw new SalaryCheckDuplicatedException("Salary check duplicated", exception);
             }
             throw exception;

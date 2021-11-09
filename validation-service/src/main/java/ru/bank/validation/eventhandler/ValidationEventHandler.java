@@ -17,6 +17,7 @@ public class ValidationEventHandler {
     @EventHandler
     public void createValidationEventHandler(CreateValidationEvent event) {
         log.info("ValidationEventHandler got CreateValidationEvent: {}", event);
-        validationService.validate(event);
+        validationService.validate(event)
+            .subscribe(result -> log.info("Validation result: {}", result));
     }
 }
