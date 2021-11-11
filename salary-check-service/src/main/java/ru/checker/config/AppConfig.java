@@ -16,7 +16,7 @@ public class AppConfig {
     public Map<ResponseType, SalaryCheckCreator> salaryCheckCreatorMap() {
         return Map.of(
             TOTALLY_APPROVED,
-            (applicationId, loanAmount) -> new ResponseDto(applicationId, true,  false, loanAmount),
+            (applicationId, loanAmount) -> new ResponseDto(applicationId, true, false, loanAmount),
             PARTLY_APPROVED,
             (applicationId, loanAmount) -> new ResponseDto(applicationId, true, false,
                 (long) (loanAmount * (75.0f / 100.0f))),

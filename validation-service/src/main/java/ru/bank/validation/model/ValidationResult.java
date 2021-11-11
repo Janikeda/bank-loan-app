@@ -5,5 +5,6 @@ import lombok.Data;
 @Data
 public class ValidationResult {
     Boolean isPersonInBlackList;
+    Boolean isSalaryCheckCancelled;
     Boolean isApproved;
 }

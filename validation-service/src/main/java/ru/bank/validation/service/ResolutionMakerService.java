@@ -24,10 +24,13 @@ public class ResolutionMakerService {
         var salaryCheckResult = tuple2.getT1();
         var blackListedPerson = tuple2.getT2();
         var result = new ValidationResult();
-        if (blackListedPerson.getId() != null || salaryCheckResult.isCancelled()) {
+
+        if (blackListedPerson.getId() != null) {
             result.setIsPersonInBlackList(true);
-            commandGateway.send(new CreateCancelCommand(salaryCheckResult.applicationId(),
-                Status.CANCELED));
+            sendCancelCommand(salaryCheckResult);
+        } else if (salaryCheckResult.isCancelled()) {
+            result.setIsSalaryCheckCancelled(true);
+            sendCancelCommand(salaryCheckResult);
         } else if (salaryCheckResult.isApproved()) {
             result.setIsApproved(true);
             commandGateway.send(new CreateCalculationCommand(salaryCheckResult.applicationId(),
@@ -35,5 +38,10 @@ public class ResolutionMakerService {
         }
 
         return Mono.just(result);
+    }
+
+    private void sendCancelCommand(SalaryCheckResult salaryCheckResult) {
+        commandGateway.send(new CreateCancelCommand(salaryCheckResult.applicationId(),
+            Status.CANCELED));
     }
 }
