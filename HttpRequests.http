@@ -1,0 +1,31 @@
+### Отказ по кредиту
+POST http://localhost:8081/bank/application/create
+Accept: */*
+Content-Type: application/json
+Cache-Control: no-cache
+
+{
+  "age": 23,
+  "email": "gainitdinovtimur123@gmail.com",
+  "inn": "3664069397",
+  "lastName": "Иванов",
+  "loanAmount": 5500000,
+  "name": "Иван",
+  "phone": "9821111115"
+}
+
+### Возможно успешный кредит
+POST http://localhost:8081/bank/application/create
+Accept: */*
+Content-Type: application/json
+Cache-Control: no-cache
+
+{
+  "age": 33,
+  "email": "gainitdinovtimur123@gmail.com",
+  "inn": "7736050003",
+  "lastName": "Петр",
+  "loanAmount": 111110400,
+  "name": "Петров",
+  "phone": "9829121115"
+}
